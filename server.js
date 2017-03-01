@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 var express = require('express');
 var logger = require('morgan');
 
+var PORT = process.env.PORT || 3000;
+
 // Requiring our Note and Article models
 
 var Notes = require("./models/Notes.js");
@@ -66,13 +68,13 @@ db.once("open", function() {
 
 // routes using 18.3 activities
 
-app.get("/articles", function(req, res) {
+app.get("/", function(req, res) {
   
   request("https://www.reddit.com/r/webdev/", function(error, response, html) {
     
     var $ = cheerio.load(html);
     
-    $("article h2").each(function(i, element) {
+    $("p.title").each(function(i, element) {
 
       
       var result = {};
